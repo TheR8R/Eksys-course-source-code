@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="public/styles/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <title>Vores To-do Lister</title>
+</head>
+
+<body id="webPage">
+    <span id="notification-dot" style="display: none;"></span>
+
+    <container class="navbar-container">
+        <nav class="navbar navbar-expand-lg bg-primary-subtle">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav nav-tabs me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" type="button" href="#" id="VINNIE">
+                                Vinnie
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" type="button" href="#" id="TOA">
+                                Toa
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" type="button" href="#" id="ANDERS">
+                                Anders
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" type="button" href="#" id="COMMON">
+                                Fælles
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" type="button" href="#" id="COMPLETED">
+                                Færdige
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" type="button" href="#" id="OBS">
+                                OBS
+                            </button>
+                        </li>
+                        <div class="dropstart broken-dropdown" id="sorting">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-funnel"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li>
+                                    <span class="dropdown-item" id="chronologicalSort"
+                                        onclick="setSortingVariable('id')" data-value="kronologisk">
+                                        Kronologisk
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="dropdown-item" id="prioritySort"
+                                        onclick="setSortingVariable('priority')" data-value="prioritet">
+                                        Prioritet
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="dropdown-item" id="deadlineSort"
+                                        onclick="setSortingVariable('deadline')" data-value="deadline">
+                                        Deadline
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </container>
+
+    <container class="todo-list-container">
+        <!-- Todo list using BootStrap 5.3 -->
+        <ul class="add-button list-group">
+            <button class="btn btn-success add-new-todo" data-bs-toggle="modal" data-bs-target="#addNewTodoModal"
+                type="button" id="add-new-todo" onclick="buildAddTodoModal()">Tilføj Ny Todo</button>
+        </ul>
+        <ul class="todo-list-todos list-group" id="theTodosList">
+            <!-- <div class="input-group mb-3 todo-item">
+                <button class="btn btn-outline-secondary fill-remaining-space" data-bs-toggle="modal" data-bs-target="#detailsTodoModal" type="button">
+                    Titel WOOOOOOOOOOOOOOOOO BROasDASDAWdaw dasd asd asd asd asdasdasd
+                </button>
+                <span class="input-group-text priority" id="basic-addon3">Prioritet: Høj</span>
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-position="top"
+                    title="Deadline: 10/04/2023" id="basic-addon3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-clock" viewBox="0 0 16 16">
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+                    </svg>
+                </span>
+                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editTodoModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path
+                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                        <path fill-rule="evenodd"
+                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                    </svg>
+                </button>
+                <span class="input-group-text" id="status">
+                    <p class="todo-status-Påbegyndt">Påbegyndt</p>
+                </span>
+                <button class="btn btn-outline-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-check-square" viewBox="0 0 16 16">
+                        <path
+                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                        <path
+                            d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z" />
+                    </svg>
+                </button>
+            </div> -->
+        </ul>
+
+
+        <!-- Modal add new todo -->
+        <div class="modal fade addNewTodoModal" id="addNewTodoModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tilføj en ny To-do</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Titel</label>
+                            <input type="text" class="form-control" name="" id="newTitel" aria-describedby="helpId"
+                                required="required" placeholder="Indtast din titel her">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Deadline</label>
+                            <input type="date" class="form-control" name="" id="newDeadline" aria-describedby="helpId"
+                                placeholder="Indtast din deadline her">
+                        </div>
+                        <div class="mb-3">
+                            <div class="center">
+                                <input class="form-check-input fællesCheckbox" type="checkbox" id="newFælles">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Fælles
+                                </label>
+                                <input class="form-check-input" type="checkbox" value="" id="newOBS">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    OBS
+                                </label>
+                            </div>
+                            <br>
+                            <label for="" class="form-label">Prioritet</label>
+                            <select class="form-select" id="newPrioritet" aria-label="Default select example">
+                                <option selected value="Low">Lav</option>
+                                <option value="Medium">Mellem</option>
+                                <option value="High">Høj</option>
+                            </select>
+                        </div>
+                        <!-- status -->
+                        <div class="mb-3">
+                            <label for="" class="form-label">Status</label>
+                            <select class="form-select" id="newStatus">
+                                <option selected value="Afventer">Afventer</option>
+                                <option value="Påbegyndt">Påbegyndt</option>
+                                <option value="Afsluttet">Afsluttet</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Beskrivelse</label>
+                            <textarea class="form-control" name="" id="newBeskrivelse" rows="5"
+                                placeholder="Indtast din beskrivelse her"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Luk</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="gemNyTodo">Gem
+                                Todo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit Todo -->
+        <div class="modal fade editTodoModal" id="editTodoModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Rediger To-do</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Titel</label>
+                            <input type="text" class="form-control" name="" id="editTitel" aria-describedby="helpId"
+                                required="required" placeholder="Indtast din titel her">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Deadline</label>
+                            <input type="date" class="form-control" name="" id="editDeadline" aria-describedby="helpId"
+                                placeholder="Indtast din deadline her">
+                        </div>
+                        <div class="mb-3">
+                            <div class="center">
+                                <input class="form-check-input editFælles" type="checkbox" id="editFælles">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Fælles
+                                </label>
+                                <input class="form-check-input editOBS" type="checkbox" value="" id="editOBS">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    OBS
+                                </label>
+                            </div>
+                            <br>
+                            <label for="" class="form-label">Prioritet</label>
+                            <select class="form-select" id="editPrioritet" aria-label="Default select example">
+                                <option selected value="Low">Lav</option>
+                                <option value="Medium">Mellem</option>
+                                <option value="High">Høj</option>
+                            </select>
+                        </div>
+                        <!-- status -->
+                        <div class="mb-3">
+                            <label for="" class="form-label">Status</label>
+                            <select class="form-select" id="editStatus">
+                                <option selected value="Afventer">Afventer</option>
+                                <option value="Påbegyndt">Påbegyndt</option>
+                                <option value="Afsluttet">Afsluttet</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Beskrivelse</label>
+                            <textarea class="form-control" name="" id="editBeskrivelse" rows="5"
+                                placeholder="Indtast din beskrivelse her"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="sletTodo" data-bs-dismiss="modal">Slet
+                                Todo</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Luk</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="gemTodo">Gem
+                                Ændringer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal View Details -->
+        <div class="modal fade detailsTodoModal" id="detailsTodoModal" tabindex="-1" aria-labelledby="title"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Title -->
+                        <h1 class="modal-title fs-5 fw-bold" id="title-details">Titel</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Deadline -->
+                        <div class="mb-3">
+                            <p class="fw-bold">Deadline:</p>
+                            <p id="deadline-details">xx-xx-xxxx</p>
+                        </div>
+                        <!-- Priority -->
+                        <div class="mb-3">
+                            <p class="fw-bold">Prioritet:</p>
+                            <p id="priority-details">Høj</p>
+                        </div>
+                        <!-- Status -->
+                        <div class="mb-3">
+                            <p class="fw-bold">Status:</p>
+                            <p id="status-details" class="badge">Afventer</p>
+                        </div>
+                        <!-- Details -->
+                        <div class="mb-3">
+                            <p class="fw-bold">Beskrivelse:</p>
+                            <p id="details-details">...</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Luk</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </container>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script src="public/scripts/main.js"></script>
+</body>
+
+</html>

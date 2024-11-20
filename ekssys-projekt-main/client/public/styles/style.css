@@ -1,0 +1,263 @@
+:root {
+    --document-color: #f6f6f6;
+    --tabs-border-color: #0d0d22;
+    --completed-color: rgb(122, 234, 122);
+    --in-progress-color: rgb(255, 166, 0);
+    --no-status-color: #c0c0c0;
+    --notification-dot-color: #ff3535;
+    --list-size-width: 50dvi;
+    --list-size-height: 60dvh;
+    --gap: 38px;
+}
+
+html {
+    /* Set background color */
+    background-color: var(--document-color);
+
+    /* Fill the whole screen */
+    height: 100%;
+}
+
+html * {
+    /* Set font */
+    font-family: Helvetica, Geneva, Arial, sans-serif !important;
+}
+
+body {
+    /* Set background color */
+    background-color: var(--document-color);
+}
+
+body container.todo-list-container {
+    background-color: var(--document-color);
+}
+
+h1 {
+    /* Center headline */
+    text-align: center;
+    padding: 0.5em 0 0.5em 0;
+}
+
+p {
+    /* Center paragraph */
+    margin: 0 !important;
+}
+
+.todo-list-container {
+    display: grid;
+    padding-top: 10dvh;
+}
+
+.todo-list-todos {
+    /* Center todo list */
+    margin-left: auto;
+    margin-right: auto;
+    min-width: var(--list-size-width) !important;
+    width: var(--list-size-width) !important;
+}
+
+.container-fluid {
+    padding-right: 0 !important;
+}
+
+.list-group {
+    /* Center todo list */
+    min-width: var(--list-size-width) !important;
+    /* max-width: var(--list-size-width) !important; */
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    background-color: var(--document-color) !important;
+    border-color: var(--tabs-border-color) !important;
+    isolation: isolate;
+    border-bottom: 2px solid transparent !important;
+}
+
+.nav-tabs {
+    width: 100% !important;
+    border-bottom: 1px solid var(--tabs-border-color) !important;
+}
+
+.nav-link {
+    /* Change color of nav-link */
+    color: #171720 !important;
+}
+
+.active {
+    /* Change color of nav-link */
+    color: var(--tabs-border-color) !important;
+}
+
+.nav-link:hover {
+    /* Change color of nav-link on hover */
+    color: var(--tabs-border-color) !important;
+    border-color: var(--tabs-border-color) !important;
+    /* make the text a bit more visible */
+    text-shadow: 0 0 0.01em #080808;
+}
+
+.navbar {
+    padding-bottom: 0 !important;
+}
+
+.add-new-todo {
+    margin-bottom: 3em;
+}
+
+ul.todo-list-todos {
+    display: grid;
+    gap: calc(var(--gap) / 2);
+    grid-auto-flow: row;
+    /* grid-auto-rows: calc(10% - var(--gap) / 10); */
+    grid-auto-rows: calc(var(--gap));
+    /* Make nice overflow handling */
+    overflow-y: auto;
+    /* Make the list scrollable */
+    height: calc(var(--gap) * 10);
+    /* snap to elements in the list*/
+    scroll-snap-type: y mandatory;
+
+    scroll-padding: var(--gap);
+
+    min-width: var(--list-size-width) !important;
+    min-height: var(--list-size-height) !important;
+    scroll-snap-align: start;
+}
+
+.btn {
+    border: 1px solid #dee2e6 !important;
+}
+
+.add-button {
+    /* make button the same width as list-list-todos */
+    margin: 0 auto;
+    width: var(--list-size-width) !important;
+}
+
+.todo-status-Påbegyndt {
+    background-color: var(--in-progress-color) !important;
+    border-radius: 6px;
+    padding: 0px 10px;
+}
+
+.todo-status-Afventer {
+    background-color: var(--no-status-color) !important;
+    border-radius: 6px;
+    padding: 0px 10px;
+}
+
+.todo-status-Afsluttet {
+    background-color: var(--completed-color) !important;
+    border-radius: 6px;
+    padding: 0px 10px;
+}
+
+.details-status-Påbegyndt {
+    background-color: var(--in-progress-color) !important;
+    color: #080808 !important;
+}
+
+.details-status-Afventer {
+    background-color: var(--no-status-color) !important;
+    color: #080808 !important;
+}
+
+.details-status-Afsluttet {
+    background-color: var(--completed-color) !important;
+    color: #080808 !important;
+}
+
+.fill-remaining-space {
+    text-align: left !important;
+    min-width: calc(var(--list-size-width) / 10) !important;
+    max-width: calc(var(--list-size-width) - (151.27px + 132.78px + 3 * 42px)) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* Make the field take up the remaining space */
+    flex-grow: 1;
+}
+
+#status * {
+    min-width: 12ch !important;
+    text-align: center !important;
+}
+
+#sletTodo {
+    margin-right: auto !important;
+}
+
+.priority {
+    width: 17ch !important;
+    text-align: left !important;
+}
+
+.input-group-text {
+    display: block !important;
+}
+
+.broken-dropdown {
+    /* align dropdown to the right */
+    margin-left: auto;
+    /* make it so the dropdown doesn't touch the edge of the screen */
+    margin-right: 1em;
+}
+
+.todo-item {
+    /* make the list element only take up the space it needs */
+    height: fit-content;
+}
+
+#notification-dot {
+    /* make the dot appear in the top right corner */
+    position: absolute;
+    top: 12px;
+    left: 305px;
+    /* make the dot a circle */
+    border-radius: 50%;
+    /* make the dot a bit smaller */
+    width: 0.5em;
+    height: 0.5em;
+
+    /* make the dot red */
+    background: var(--notification-dot-color);
+
+    /* make the dot appear on top of everything else */
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+}
+
+.center {
+    text-align: center;
+}
